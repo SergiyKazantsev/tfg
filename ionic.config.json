@@ -1,0 +1,7 @@
+{
+  "name": "lista-compra-angular",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
