@@ -1,8 +1,13 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar style="display: flex">
     <ion-title>
-      Inbox
+      Lista de compras
     </ion-title>
+    @if (this.data.loggedIn()) {
+      <ion-button style="margin-left: 10px" (click)="onClick()">
+        Cerrar sesion
+      </ion-button>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -19,9 +24,25 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    @for (message of getMessages(); track message) {
-      <app-message [message]="message"></app-message>
-    }
-  </ion-list>
+  @if (this.data.loggedIn()) {
+    <app-item-compra-form (itemSubmit)="handleCreate($event)"></app-item-compra-form>
+    <ion-list>
+      @for (item of items; track item ) {
+        <app-item-compra [itemCompra]="item" (delete)="handleDelete($event)" (check)="handleCheck($event)"></app-item-compra>
+      }
+    </ion-list>
+  } @else {
+    <ion-card>
+      <ion-card-header>
+        <h1>Iniciar sesion</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="profileForm" >
+          <ion-input id="email" formControlName="email" type="email" label="Email"></ion-input>
+          <ion-input id="password" formControlName="password" type="password" label="Contrasena"></ion-input>
+          <ion-button type="submit" [disabled]="!profileForm.valid" (click)="onLogin()">Iniciar sesion</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  }
 </ion-content>
