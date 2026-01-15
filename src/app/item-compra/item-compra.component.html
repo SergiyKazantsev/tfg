@@ -1,0 +1,11 @@
+<ion-item>
+  <ion-label
+    (click)="checkItem(itemCompra)"
+    [class.crossed-out]="itemCompra.checked">
+    <h2>{{ itemCompra.name }}</h2>
+  </ion-label>
+
+  <ion-button slot="end" fill="clear" (click)="deleteItem(itemCompra)">
+    <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+  </ion-button>
+</ion-item>

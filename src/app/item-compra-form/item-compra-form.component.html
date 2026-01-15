@@ -1,0 +1,12 @@
+<form [formGroup]="itemForm" (ngSubmit)="submitForm()">
+  <ion-item>
+    <ion-input
+      formControlName="text"
+      placeholder="Create new item...">
+    </ion-input>
+
+    <ion-button slot="end" type="submit" [disabled]="itemForm.invalid">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-item>
+</form>
