@@ -1,45 +1,33 @@
-import {Component, inject} from '@angular/core';
-import {
-  IonButton, IonCard, IonCardContent, IonCardHeader,
-  IonContent,
-  IonHeader, IonInput,
-  IonList,
-  IonRefresher,
-  IonRefresherContent,
-  IonTitle,
-  IonToolbar,
-  RefresherCustomEvent
-} from '@ionic/angular/standalone';
+import {Component, inject, OnInit} from '@angular/core';
+import {IonButton, IonContent, IonHeader, IonList, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import {DataService, ItemCompra} from '../services/data.service';
 import {ItemCompraComponent} from "../item-compra/item-compra.component";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {ReactiveFormsModule} from "@angular/forms";
 import {ItemCompraFormComponent} from "../item-compra-form/item-compra-form.component";
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonRefresher, IonRefresherContent, IonList, ItemCompraComponent, IonButton, IonCard, IonCardHeader, IonCardContent, IonInput, ReactiveFormsModule, ItemCompraFormComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, ItemCompraComponent, IonButton, ReactiveFormsModule, ItemCompraFormComponent],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   data = inject(DataService);
+  auth = inject(AuthService);
+  private router = inject(Router);
   items: ItemCompra[] = [];
-
-  profileForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-  });
 
   constructor() {
   }
 
-  async refresh(ev: any) {
-    this.items = await this.getItems();
-    (ev as RefresherCustomEvent).detail.complete();
-  }
-
   async ngOnInit() {
-    this.items = await this.getItems();
+    if (!this.auth.loggedIn()) {
+      await this.router.navigate(['/login']);
+    } else {
+      this.items = await this.getItems();
+    }
   }
 
   async getItems() {
@@ -53,13 +41,8 @@ export class HomePage {
   }
 
   async onClick() {
-    await this.data.signOut()
-  }
-
-  async onLogin() {
-    await this.data.signIn(this.profileForm.value.email as string, this.profileForm.value.password as string);
-    this.items = await this.getItems();
-    this.profileForm.reset()
+    await this.auth.signOut()
+    this.router.navigate(['/login']);
   }
 
   async handleDelete($event: ItemCompra) {

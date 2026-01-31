@@ -1,5 +1,6 @@
-import {Injectable, signal} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import { AuthChangeEvent, createClient, Session, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseClientProvider} from "./supabase-client-provider.service";
 import { environment } from '../../environments/environment';
 
 export interface Message {
@@ -22,49 +23,16 @@ export interface ItemCompra {
 })
 export class DataService {
   private supabase: SupabaseClient;
-  public currentSession: Session | null = null;
-  public loggedIn = signal(false);
+  supabaseClientProvider = inject(SupabaseClientProvider);
 
   constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
-    );
-
-    // Initialize session immediately
-    this.supabase.auth.getSession().then(({ data }) => {
-      this.currentSession = data.session;
-    });
-
-    // Keep it updated automatically
-    this.supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') this.loggedIn.set(true);
-      else if (event === 'SIGNED_OUT') {
-        this.loggedIn.set(false);
-          // clear local and session storage
-          [
-          window.localStorage, window.sessionStorage,
-          ].forEach((storage) => {
-          Object.entries(storage)
-            .forEach(([key]) => {
-              storage.removeItem(key)
-            })
-        })
-      }
-    });
+    this.supabase = this.supabaseClientProvider.supabase;
   }
 
   public getMessages() {
     return this.supabase.from('items').select('*');
   }
 
-  signIn(email: string, password:string) {
-    return this.supabase.auth.signInWithPassword({ email, password })
-  }
-
-  signOut() {
-    return this.supabase.auth.signOut()
-  }
 
   async deleteItem($event: ItemCompra) {
     const { error } = await this.supabase

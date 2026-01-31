@@ -1,48 +1,25 @@
 <ion-header [translucent]="true">
-  <ion-toolbar style="display: flex">
-    <ion-title>
-      Lista de compras
-    </ion-title>
-    @if (this.data.loggedIn()) {
-      <ion-button style="margin-left: 10px" (click)="onClick()">
-        Cerrar sesion
-      </ion-button>
-    }
-  </ion-toolbar>
+  @if (this.auth.loggedIn()) {
+    <ion-toolbar style="display: flex">
+      <ion-title>
+        Lista de compras
+      </ion-title>
+      @if (this.auth.loggedIn()) {
+        <ion-button style="margin-left: 10px" (click)="onClick()">
+          Cerrar sesion
+        </ion-button>
+      }
+    </ion-toolbar>
+  }
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">
-        Inbox
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  @if (this.data.loggedIn()) {
+  @if (this.auth.loggedIn()) {
     <app-item-compra-form (itemSubmit)="handleCreate($event)"></app-item-compra-form>
     <ion-list>
       @for (item of items; track item ) {
         <app-item-compra [itemCompra]="item" (delete)="handleDelete($event)" (check)="handleCheck($event)"></app-item-compra>
       }
     </ion-list>
-  } @else {
-    <ion-card>
-      <ion-card-header>
-        <h1>Iniciar sesion</h1>
-      </ion-card-header>
-      <ion-card-content>
-        <form [formGroup]="profileForm" >
-          <ion-input id="email" formControlName="email" type="email" label="Email"></ion-input>
-          <ion-input id="password" formControlName="password" type="password" label="Contrasena"></ion-input>
-          <ion-button type="submit" [disabled]="!profileForm.valid" (click)="onLogin()">Iniciar sesion</ion-button>
-        </form>
-      </ion-card-content>
-    </ion-card>
   }
 </ion-content>

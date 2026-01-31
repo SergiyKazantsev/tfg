@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ItemCompra} from "../services/data.service";
-import {IonButton, IonIcon, IonItem, IonLabel, IonNote} from "@ionic/angular/standalone";
+import {IonButton, IonIcon, IonItem, IonLabel} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-item-compra',
@@ -10,7 +10,6 @@ import {IonButton, IonIcon, IonItem, IonLabel, IonNote} from "@ionic/angular/sta
     IonIcon,
     IonItem,
     IonLabel,
-    IonNote,
     IonButton
   ]
 })
