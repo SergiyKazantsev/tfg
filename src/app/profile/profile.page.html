@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <div class="profile-header">
+    <h2>{{ user.name }}</h2>
+    <p>{{ user.email }}</p>
+    <ion-button fill="outline" size="small" (click)="editProfile()">
+      Editar Perfil
+    </ion-button>
+  </div>
+
+  <ion-list lines="inset" class="ion-margin-top">
+    <ion-item>
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h3>Nombre de usuario</h3>
+        <p>{{ user.username }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="danger" fill="clear" (click)="logout()">
+    Cerrar Sesión
+  </ion-button>
+</ion-content>
