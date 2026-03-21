@@ -1,0 +1,47 @@
+
+<ion-content [fullscreen]="true" class="login">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid style="height: 100%; display: grid; align-items: center;">
+    <ion-row style="width: 100%" class="ion-justify-content-center">
+      <ion-col size="12" size-md="8" size-lg="4">
+        <ion-card>
+          <ion-card-header>
+            <h1 class="ion-text-center">Crear cuenta</h1>
+          </ion-card-header>
+
+          <ion-card-content>
+            <form [formGroup]="registerForm">
+              <ion-input class="ion-margin-bottom" formControlName="firstName" type="text"
+                         label="Nombre" labelPlacement="floating" fill="outline" placeholder="Tu nombre"></ion-input>
+
+              <ion-input class="ion-margin-bottom" formControlName="lastName" type="text"
+                         label="Apellido" labelPlacement="floating" fill="outline" placeholder="Tu apellido"></ion-input>
+
+              <ion-input class="ion-margin-bottom" formControlName="email" type="email"
+                         label="Correo electrónico" labelPlacement="floating" fill="outline" placeholder="correo@correo.com"></ion-input>
+
+              <ion-input class="ion-margin-bottom" formControlName="password" type="password"
+                         label="Contraseña" labelPlacement="floating" fill="outline" placeholder="●●●●●●●●"></ion-input>
+
+              <ion-button expand="block" type="submit" [disabled]="!registerForm.valid" (click)="onRegister()">
+                Registrarse
+              </ion-button>
+            </form>
+            <ion-item-divider class="ion-no-margin"></ion-item-divider>
+            <div class="ion-text-center ion-margin-top">
+              <ion-text color="medium">¿Ya tienes cuenta?</ion-text>
+              <a routerLink="/login" routerDirection="root" class="ion-margin-start" style="text-decoration: none; font-weight: bold;">
+                Inicia sesión
+              </a>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

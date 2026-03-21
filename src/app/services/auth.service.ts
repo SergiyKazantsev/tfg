@@ -22,7 +22,10 @@ export class AuthService {
 
     // Keep it updated automatically
     this.supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') this.loggedIn.set(true);
+      if (event === 'SIGNED_IN') {
+        this.loggedIn.set(true);
+        this.getSession();
+      }
       else if (event === 'SIGNED_OUT') {
         this.loggedIn.set(false);
         // clear local and session storage
@@ -42,11 +45,31 @@ export class AuthService {
     return this.supabase.auth.signInWithPassword({ email, password })
   }
 
+  async signUp(email: string, password: string, data: any) {
+    return await this.supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: data
+      }
+    });
+  }
+
   async signOut() {
     this.loggedIn.set(false);
     await this.supabase.auth.signOut()
   }
 
+  async getSession() {
+    this.supabase.auth.getSession().then(({ data }) => {
+      this.currentSession = data.session;
+      return data.session
+    });
+  }
+
+  async updateUser(attributes: any) {
+    return await this.supabase.auth.updateUser(attributes);
+  }
   get user() {
     return this.supabase.auth.getUser().then(({ data }) => data?.user)
   }

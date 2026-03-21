@@ -20,7 +20,7 @@ import {
   IonToolbar,
   ToastController,
 } from '@ionic/angular/standalone';
-import {AuthService} from "../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {Router, RouterLink} from "@angular/router";
 
 @Component({
@@ -28,7 +28,7 @@ import {Router, RouterLink} from "@angular/router";
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonInput, IonRow, IonText, ReactiveFormsModule, RouterLink, IonItemDivider, IonRouterLinkWithHref, IonIcon]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonInput, IonRow, IonText, ReactiveFormsModule, RouterLink, IonItemDivider, IonRouterLinkWithHref]
 })
 export class LoginPage implements OnInit {
   auth = inject(AuthService);
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
       await toast.present();
     } else {
       this.profileForm.reset();
-      await this.router.navigate(['/home']);
+      await this.router.navigate(['/soprano/home']);
     }
   }
 }

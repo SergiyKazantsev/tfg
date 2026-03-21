@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, ItemCompraComponent, IonButton, ReactiveFormsModule, ItemCompraFormComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonList, ItemCompraComponent, ReactiveFormsModule, ItemCompraFormComponent],
 })
 export class HomePage implements OnInit {
   data = inject(DataService);

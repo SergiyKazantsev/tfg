@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/soprano/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="editForm" (ngSubmit)="onUpdate()">
+    <ion-list lines="none">
+      <ion-input class="ion-margin-bottom" label="Nombre" labelPlacement="floating" fill="outline"
+                 formControlName="firstName" type="text"></ion-input>
+      <ion-input class="ion-margin-bottom" label="Apellido" labelPlacement="floating" fill="outline"
+                 formControlName="lastName" type="text"></ion-input>
+
+      <ion-input class="ion-margin-bottom" label="Nuevo correo electrónico"
+                 labelPlacement="floating"
+                 fill="outline"
+                 formControlName="email"
+                 type="email">
+      </ion-input>
+    </ion-list>
+
+    <ion-button expand="block" type="submit" [disabled]="!editForm.valid" class="ion-margin-top">
+      Guardar Cambios
+    </ion-button>
+  </form>
+</ion-content>

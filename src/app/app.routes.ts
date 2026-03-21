@@ -15,7 +15,13 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
+        loadComponent: () => import('./perfil/profile/profile.page').then(m => m.ProfilePage),
+        canActivate: [authGuard]
+      },
+      {
+        path: 'edit-profile',
+        loadComponent: () => import('./perfil/editar-perfil/editar-perfil.page').then(m => m.EditarPerfilPage),
+        canActivate: [authGuard]
       },
     ],
   },
@@ -26,12 +32,12 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then(m => m.LoginPage),
+    loadComponent: () => import('./login-registro/login/login.page').then(m => m.LoginPage),
     canActivate: [publicGuard]
   },
   {
     path: 'register',
-    loadComponent: () => import('./register/register.page').then(m => m.RegisterPage),
+    loadComponent: () => import('./login-registro/register/register.page').then(m => m.RegisterPage),
     canActivate: [publicGuard]
   },
 ];
